@@ -2,7 +2,6 @@ package com.imooc.mall.service;
 
 import com.imooc.mall.pojo.User;
 import com.imooc.mall.vo.ResponseVo;
-import org.springframework.stereotype.Service;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,8 +14,18 @@ public interface IUserService {
     /**
      * 注册
      *
-     * @param user
+     * @param user the user
+     * @return the response vo
      */
-    ResponseVo register(User user);
+    ResponseVo<User> register(User user);
+
+    /**
+     * 登录 response vo.
+     *
+     * @param username the username
+     * @param password the password
+     * @return the response vo
+     */
+    ResponseVo<User> login(String username, String password);
 
 }

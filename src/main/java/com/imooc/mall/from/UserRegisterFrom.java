@@ -3,8 +3,6 @@ package com.imooc.mall.from;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * Description: Be brave or be a loser
  */
 @Data
-public class UserFrom {
+public class UserRegisterFrom {
 
     //@NotBlank 用于String 会判断空格
     //@NotEmpty 用于集合

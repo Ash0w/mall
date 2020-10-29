@@ -26,7 +26,10 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
-    public ResponseVo register(User user) {
+    public ResponseVo<User> register(User user) {
+        //返回异常的json格式和前端约定的不同在自定义异常捕获类中定义RuntimeExceptionHandler
+        //error();
+
         //向数据库查询该username是否存在
         int countByUsername = userMapper.countByUsername(user.getUsername());
         if (countByUsername > 0) {
@@ -48,4 +51,25 @@ public class UserServiceImpl implements IUserService {
         }
         return ResponseVo.success();
     }
+
+    @Override
+    public ResponseVo<User> login(String username, String password) {
+        User user = userMapper.selectByUsername(username);
+        if (user == null) {
+            //用户名不存在（返回用户名或密码错误）
+            return ResponseVo.error(USERNAME_OR_PASSWORD_ERROR);
+        }
+        if (!user.getPassword().equalsIgnoreCase(DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8)))) {
+            //密码错误（返回用户名或密码错误）
+            return ResponseVo.error(USERNAME_OR_PASSWORD_ERROR);
+
+        }
+        user.setPassword("");
+        return ResponseVo.success(user);
+    }
+
+    private void error() {
+        throw new RuntimeException("意外错误");
+    }
+
 }
