@@ -3,6 +3,7 @@ package com.imooc.mall.service;
 import com.github.pagehelper.PageInfo;
 import com.imooc.mall.MallApplicationTests;
 import com.imooc.mall.enums.ResposeEnum;
+import com.imooc.mall.vo.ProductDetailVo;
 import com.imooc.mall.vo.ProductVo;
 import com.imooc.mall.vo.ResponseVo;
 import org.junit.Assert;
@@ -20,6 +21,11 @@ public class IProducrServiceTest extends MallApplicationTests {
     @Test
     public void list() {
         ResponseVo<PageInfo> responseVo = producrService.list(null, 1, 3);
+        Assert.assertEquals(ResposeEnum.SUCCESS.getCode(), responseVo.getStatus());
+    }
+    @Test
+    public void detail(){
+        ResponseVo<ProductDetailVo> responseVo=producrService.detail(26);
         Assert.assertEquals(ResposeEnum.SUCCESS.getCode(), responseVo.getStatus());
     }
 }
