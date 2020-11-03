@@ -1,7 +1,7 @@
 package com.imooc.mall.service.impl;
 
 import com.imooc.mall.MallApplicationTests;
-import com.imooc.mall.enums.ResposeEnum;
+import com.imooc.mall.enums.ResponseEnum;
 import com.imooc.mall.service.ICategoryService;
 import com.imooc.mall.vo.CategoryVo;
 import com.imooc.mall.vo.ResponseVo;
@@ -14,8 +14,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.*;
-
 @Slf4j
 public class CategoryServiceImplTest extends MallApplicationTests {
     @Autowired
@@ -24,7 +22,7 @@ public class CategoryServiceImplTest extends MallApplicationTests {
     @Test
     public void selectAll() {
         ResponseVo<List<CategoryVo>> responseVo = categoryService.selectAll();
-        Assert.assertEquals(ResposeEnum.SUCCESS.getCode(), responseVo.getStatus());
+        Assert.assertEquals(ResponseEnum.SUCCESS.getCode(), responseVo.getStatus());
     }
 
     @Test

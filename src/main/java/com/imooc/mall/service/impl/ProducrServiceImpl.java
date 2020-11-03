@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 import static com.imooc.mall.enums.ProductStatusEnum.DELETE;
 import static com.imooc.mall.enums.ProductStatusEnum.OFF_SALE;
-import static com.imooc.mall.enums.ResposeEnum.PRODUCT_OFF_SALE_OR_DELETE;
+import static com.imooc.mall.enums.ResponseEnum.PRODUCT_OFF_SALE_OR_DELETE;
 
 /**
  * Created with IntelliJ IDEA.

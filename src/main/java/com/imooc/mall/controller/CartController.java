@@ -1,8 +1,8 @@
 package com.imooc.mall.controller;
 
 import com.imooc.mall.consts.MallConst;
-import com.imooc.mall.from.CartAddFrom;
-import com.imooc.mall.from.CartUpdateFrom;
+import com.imooc.mall.form.CartAddForm;
+import com.imooc.mall.form.CartUpdateForm;
 import com.imooc.mall.pojo.User;
 import com.imooc.mall.service.ICartService;
 import com.imooc.mall.vo.CartVo;
@@ -33,14 +33,14 @@ public class CartController {
     }
 
     @PostMapping("/carts")
-    public ResponseVo<CartVo> add(@Valid @RequestBody CartAddFrom cartAddFrom, HttpSession session) {
+    public ResponseVo<CartVo> add(@Valid @RequestBody CartAddForm cartAddForm, HttpSession session) {
         User user = (User) session.getAttribute(MallConst.CURRENT_USER);
-        return cartService.add(user.getId(), cartAddFrom);
+        return cartService.add(user.getId(), cartAddForm);
     }
 
     @PutMapping("/carts/{productId}")
     public ResponseVo<CartVo> update(@PathVariable Integer productId,
-                                     @Valid @RequestBody CartUpdateFrom from, HttpSession session) {
+                                     @Valid @RequestBody CartUpdateForm from, HttpSession session) {
         User user = (User) session.getAttribute(MallConst.CURRENT_USER);
         return cartService.update(user.getId(), productId, from);
     }

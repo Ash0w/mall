@@ -10,7 +10,7 @@ import lombok.Getter;
  * Description: Be brave or be a loser
  */
 @Getter
-public enum ResposeEnum {
+public enum ResponseEnum {
     /**
      * Error respose enum.
      */
@@ -53,6 +53,11 @@ public enum ResposeEnum {
     PRODUCT_STOCK_ERROR(14, "库存不正确"),
 
     CART_PRODUCT_NOT_EXSIT(15, "购物车里无该商品"),
+
+    DELETE_SHIPPING_FAIL(16, "删除地址失败"),
+
+    UPDATE_SHIPPING_FAIL(17, "更新地址失败"),
+
     ;
     /**
      * The Code.
@@ -63,7 +68,7 @@ public enum ResposeEnum {
      */
     String desc;
 
-    ResposeEnum(Integer code, String desc) {
+    ResponseEnum(Integer code, String desc) {
         this.code = code;
         this.desc = desc;
     }

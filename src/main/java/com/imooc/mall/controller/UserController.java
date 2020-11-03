@@ -1,7 +1,7 @@
 package com.imooc.mall.controller;
 
-import com.imooc.mall.from.UserLoginFrom;
-import com.imooc.mall.from.UserRegisterFrom;
+import com.imooc.mall.form.UserLoginForm;
+import com.imooc.mall.form.UserRegisterForm;
 import com.imooc.mall.pojo.User;
 import com.imooc.mall.service.IUserService;
 import com.imooc.mall.vo.ResponseVo;
@@ -29,7 +29,7 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("/user/register")
-    public ResponseVo<User> register(@Valid @RequestBody UserRegisterFrom userRegisterFrom) {
+    public ResponseVo<User> register(@Valid @RequestBody UserRegisterForm userRegisterForm) {
         //在RuntimeExceptionHandler里做了统一表单验证处理
 //        if (bindingResult.hasErrors()) {
 //            log.error("注册提交的参数有误，{}{}",
@@ -38,16 +38,16 @@ public class UserController {
 //            return ResponseVo.error(PARAM_ERROR, bindingResult);
 //        }
         User user = new User();
-        BeanUtils.copyProperties(userRegisterFrom, user);
+        BeanUtils.copyProperties(userRegisterForm, user);
         return userService.register(user);
     }
 
     @PostMapping("/user/login")
-    public ResponseVo<User> login(@Valid @RequestBody UserLoginFrom userLoginFrom, HttpSession session) {
+    public ResponseVo<User> login(@Valid @RequestBody UserLoginForm userLoginForm, HttpSession session) {
 //        if (bindingResult.hasErrors()) {
 //            return ResponseVo.error(PARAM_ERROR, bindingResult);
 //        }
-        ResponseVo<User> userResponseVo = userService.login(userLoginFrom.getUsername(), userLoginFrom.getPassword());
+        ResponseVo<User> userResponseVo = userService.login(userLoginForm.getUsername(), userLoginForm.getPassword());
         //设置session
         session.setAttribute(CURRENT_USER, userResponseVo.getData());
         log.info("/login sessionId={}", session.getId());

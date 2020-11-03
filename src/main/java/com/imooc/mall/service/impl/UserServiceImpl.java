@@ -11,7 +11,7 @@ import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.imooc.mall.enums.ResposeEnum.*;
+import static com.imooc.mall.enums.ResponseEnum.*;
 
 /**
  * Created with IntelliJ IDEA.

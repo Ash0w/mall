@@ -1,4 +1,4 @@
-package com.imooc.mall.from;
+package com.imooc.mall.form;
 
 import lombok.Data;
 
@@ -13,7 +13,7 @@ import lombok.Data;
  */
 
 @Data
-public class CartUpdateFrom {
+public class CartUpdateForm {
     private Integer quantity;
     private Boolean selected;
 }

@@ -3,9 +3,9 @@ package com.imooc.mall.service.impl;
 import com.google.gson.Gson;
 import com.imooc.mall.dao.ProductMapper;
 import com.imooc.mall.enums.ProductStatusEnum;
-import com.imooc.mall.enums.ResposeEnum;
-import com.imooc.mall.from.CartAddFrom;
-import com.imooc.mall.from.CartUpdateFrom;
+import com.imooc.mall.enums.ResponseEnum;
+import com.imooc.mall.form.CartAddForm;
+import com.imooc.mall.form.CartUpdateForm;
 import com.imooc.mall.pojo.Cart;
 import com.imooc.mall.pojo.Product;
 import com.imooc.mall.service.ICartService;
@@ -44,20 +44,20 @@ public class CartServiceImpl implements ICartService {
     private Gson gson = new Gson();
 
     @Override
-    public ResponseVo<CartVo> add(Integer uid, CartAddFrom cartAddFrom) {
+    public ResponseVo<CartVo> add(Integer uid, CartAddForm cartAddForm) {
         Integer quantity = 1;
-        Product product = productMapper.selectByPrimaryKey(cartAddFrom.getProductId());
+        Product product = productMapper.selectByPrimaryKey(cartAddForm.getProductId());
         //判断商品是否存在
         if (product == null) {
-            return ResponseVo.error(ResposeEnum.PRODUCT_NOT_EXSIT);
+            return ResponseVo.error(ResponseEnum.PRODUCT_NOT_EXSIT);
         }
         //商品是否在售
         if (!product.getStatus().equals(ProductStatusEnum.ON_SALE.getCode())) {
-            return ResponseVo.error(ResposeEnum.PRODUCT_OFF_SALE_OR_DELETE);
+            return ResponseVo.error(ResponseEnum.PRODUCT_OFF_SALE_OR_DELETE);
         }
         //库存是否充足
         if (product.getStock() <= 0) {
-            return ResponseVo.error(ResposeEnum.PRODUCT_STOCK_ERROR);
+            return ResponseVo.error(ResponseEnum.PRODUCT_STOCK_ERROR);
         }
         //写入Redis
         //key:cart_1
@@ -69,7 +69,7 @@ public class CartServiceImpl implements ICartService {
         String value = opsForHash.get(redisKey, String.valueOf(product.getId()));
         if (StringUtils.isEmpty(value)) {
             //没有该商品，执行新增
-            cart = new Cart(product.getId(), quantity, cartAddFrom.getSelected());
+            cart = new Cart(product.getId(), quantity, cartAddForm.getSelected());
         } else {
             //已经存在该商品，执行数量+1
             //json反序列化为对象
@@ -120,22 +120,22 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public ResponseVo<CartVo> update(Integer uid, Integer productId, CartUpdateFrom cartUpdateFrom) {
+    public ResponseVo<CartVo> update(Integer uid, Integer productId, CartUpdateForm cartUpdateForm) {
         HashOperations<String, String, String> opsForHash = redisTemplate.opsForHash();
         String redisKey = String.format(CART_REDIS_KEY_TEMPLATE, uid);
         //从Redis读出value，对数量进行操作
         String value = opsForHash.get(redisKey, String.valueOf(productId));
         if (StringUtils.isEmpty(value)) {
             //购物车里没有该商品，报错
-            return ResponseVo.error(ResposeEnum.CART_PRODUCT_NOT_EXSIT);
+            return ResponseVo.error(ResponseEnum.CART_PRODUCT_NOT_EXSIT);
         }
         //已经存在该商品，修改内容
         Cart cart = gson.fromJson(value, Cart.class);
-        if (cartUpdateFrom.getQuantity() != null && cartUpdateFrom.getQuantity() >= 0) {
-            cart.setQuantity(cartUpdateFrom.getQuantity());
+        if (cartUpdateForm.getQuantity() != null && cartUpdateForm.getQuantity() >= 0) {
+            cart.setQuantity(cartUpdateForm.getQuantity());
         }
-        if (cartUpdateFrom.getSelected() != null) {
-            cart.setProductSelected(cartUpdateFrom.getSelected());
+        if (cartUpdateForm.getSelected() != null) {
+            cart.setProductSelected(cartUpdateForm.getSelected());
         }
         opsForHash.put(redisKey, String.valueOf(productId), gson.toJson(cart));
         return list(uid);
@@ -149,7 +149,7 @@ public class CartServiceImpl implements ICartService {
         String value = opsForHash.get(redisKey, String.valueOf(productId));
         if (StringUtils.isEmpty(value)) {
             //购物车里没有该商品，报错
-            return ResponseVo.error(ResposeEnum.CART_PRODUCT_NOT_EXSIT);
+            return ResponseVo.error(ResponseEnum.CART_PRODUCT_NOT_EXSIT);
         }
         opsForHash.delete(redisKey, String.valueOf(productId));
         return list(uid);

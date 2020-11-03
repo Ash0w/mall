@@ -1,4 +1,4 @@
-package com.imooc.mall.from;
+package com.imooc.mall.form;
 
 import lombok.Data;
 
@@ -12,16 +12,10 @@ import javax.validation.constraints.NotBlank;
  * Description: Be brave or be a loser
  */
 @Data
-public class UserRegisterFrom {
+public class UserLoginForm {
 
-    //@NotBlank 用于String 会判断空格
-    //@NotEmpty 用于集合
-    //@NotNull
-    @NotBlank/*(message = "用户名不能为空！")*/
+    @NotBlank
     private String username;
     @NotBlank
     private String password;
-    @NotBlank
-    private String email;
-
 }
