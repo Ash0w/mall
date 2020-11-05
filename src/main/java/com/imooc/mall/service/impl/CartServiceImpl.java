@@ -180,7 +180,9 @@ public class CartServiceImpl implements ICartService {
         Integer sum = listForCart(uid).stream().map(Cart::getQuantity).reduce(0, Integer::sum);
         return ResponseVo.success(sum);
     }
-    private List<Cart> listForCart(Integer uid) {
+
+    @Override
+    public List<Cart> listForCart(Integer uid) {
         HashOperations<String, String, String> opsForHash = redisTemplate.opsForHash();
         String redisKey = String.format(CART_REDIS_KEY_TEMPLATE, uid);
         List<Cart> cartList = new ArrayList<>();

@@ -58,6 +58,13 @@ public enum ResponseEnum {
 
     UPDATE_SHIPPING_FAIL(17, "更新地址失败"),
 
+    SHIPPING_NOT_EXIST(18, "收货地址不存在"),
+
+    CART_SELECTED_IS_EMPTY(19, "请选择商品后下单"),
+
+    ORDER_NOT_EXSIT(20, "订单不存在"),
+
+    ORDER_STATUS_ERROR(21, "订单状态有误"),
     ;
     /**
      * The Code.

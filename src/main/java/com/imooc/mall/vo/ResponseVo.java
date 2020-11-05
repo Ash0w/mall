@@ -31,11 +31,22 @@ public class ResponseVo<T> {
         this.data = data;
     }
 
+    public ResponseVo(Integer status, T data, String msg) {
+        this.status = status;
+        this.data = data;
+        this.msg = msg;
+    }
+
     public static <T> ResponseVo<T> successByMsg(String msg) {
         return new ResponseVo<>(ResponseEnum.SUCCESS.getCode(), msg);
     }
+
     public static <T> ResponseVo<T> success(T data) {
         return new ResponseVo<>(ResponseEnum.SUCCESS.getCode(), data);
+    }
+
+    public static <T> ResponseVo<T> success(T data, String msg) {
+        return new ResponseVo<>(ResponseEnum.SUCCESS.getCode(), data, msg);
     }
 
     public static <T> ResponseVo<T> success() {
@@ -45,10 +56,12 @@ public class ResponseVo<T> {
     public static <T> ResponseVo<T> error(ResponseEnum responseEnum) {
         return new ResponseVo<>(responseEnum.getCode(), responseEnum.getDesc());
     }
+
     public static <T> ResponseVo<T> error(ResponseEnum responseEnum, String msg) {
         return new ResponseVo<>(responseEnum.getCode(), msg);
     }
+
     public static <T> ResponseVo<T> error(ResponseEnum responseEnum, BindingResult bindingResult) {
-        return new ResponseVo<>(responseEnum.getCode(), Objects.requireNonNull(bindingResult.getFieldError()).getField()+""+bindingResult.getFieldError().getDefaultMessage());
+        return new ResponseVo<>(responseEnum.getCode(), Objects.requireNonNull(bindingResult.getFieldError()).getField() + "" + bindingResult.getFieldError().getDefaultMessage());
     }
 }

@@ -8,6 +8,7 @@ import com.imooc.mall.form.ShippingForm;
 import com.imooc.mall.pojo.Shipping;
 import com.imooc.mall.service.IShippingService;
 import com.imooc.mall.vo.ResponseVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,8 @@ import java.util.Map;
  * Description: Be brave or be a loser
  */
 @Service
-public class IShippingServiceImpl implements IShippingService {
+@Slf4j
+public class ShippingServiceImpl implements IShippingService {
     @Autowired
     private ShippingMapper shippingMapper;
 
@@ -40,7 +42,7 @@ public class IShippingServiceImpl implements IShippingService {
         }
         Map<String, Integer> map = new HashMap<>();
         map.put("shippingId", shipping.getId());
-        return ResponseVo.success(map);
+        return ResponseVo.success(map, ResponseEnum.SUCCESS.getDesc());
     }
 
     @Override

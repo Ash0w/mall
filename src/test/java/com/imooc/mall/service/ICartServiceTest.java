@@ -23,9 +23,10 @@ public class ICartServiceTest extends MallApplicationTests {
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     private Integer uid = 1;
-    private Integer productId = 26;
+    private Integer productId = 27;
 
     @Before
+//    @Test
     public void add() {
         log.info("-----------新增购物车-----------");
         CartAddForm cartAddForm = new CartAddForm();
